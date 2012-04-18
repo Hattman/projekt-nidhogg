@@ -1,10 +1,18 @@
 package org.megabear;
 
+import org.megabear.Main.dir;
+
 public class Hero implements solid{
-	private int m_x = 0;
-	private int m_y = 0;
-	private int m_speed = 1;
+	private int m_x;
+	private int m_y;
+	private int m_speed;
+	private String m_path = "P:\\Desktop\\Project_Nidhogg\\Hero.png";
 	
+	public Hero() {
+		m_x = 400;
+		m_y = 400;
+		m_speed = 5;
+	}
 	
 	@Override
 	public int getX() {
@@ -36,9 +44,8 @@ public class Hero implements solid{
 	}
 
 	@Override
-	public String path() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getPath() {
+		return m_path;
 	}
 
 	@Override
