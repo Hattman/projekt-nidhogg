@@ -6,19 +6,32 @@ import org.megabear.Main.dir;
 
 public class Nidhogg {
 	private Vector<Entity> m_entityVector = new Vector<Entity>();
+	private Vector<solid> m_solidVector = new Vector<solid>();
 	private Hero m_theHero;
+	private dir m_direction;
 	
 	public Nidhogg(){
 		m_theHero = new Hero();
 		m_entityVector.add(m_theHero);
+		m_solidVector.add(m_theHero);
 	}
 	
 	public void tick(){
-		//it moves
+		for(int i=0; i<m_entityVector.size(); i++){
+			m_entityVector.get(i).move(m_direction);
+		}
+		for(int i=0; i<m_solidVector.size(); i++){
+			for(int j=0; j<m_solidVector.size(); j++){
+				boolean stuff = m_solidVector.get(i).blockAt(m_solidVector.get(j).getX(), m_solidVector.get(j).getY());
+				if(stuff){
+					m_solidVector.get(i).colliedAction(m_solidVector.get(j));
+				}
+			}
+		}
 	}
 	
-	public void heroMove(dir p_dir){
-		m_theHero.move(p_dir);
+	public void getDirection(dir p_dir){
+		m_direction = p_dir;
 	}
 	
 	public Vector<Entity> getObjects(){

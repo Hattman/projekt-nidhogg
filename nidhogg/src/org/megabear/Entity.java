@@ -7,4 +7,5 @@ public interface Entity {
 	public int getY();
 	public void move(dir p_d);
 	public String getPath();
+	public String typ();
 }

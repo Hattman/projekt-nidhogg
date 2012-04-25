@@ -39,6 +39,8 @@ public class Hero implements solid{
 		case RIGHT:
 			m_x += m_speed;
 			break;
+		default:
+			break;
 		}
 		
 	}
@@ -49,15 +51,27 @@ public class Hero implements solid{
 	}
 
 	@Override
-	public boolean blockAt(int p_x, int p_y) {
-		// TODO Auto-generated method stub
-		return false;
+	public dir blockAt(int p_x, int p_y) {
+		if((p_x >= m_x)&&(p_x <= m_x+32)&&(p_y  m_y)){
+			return dir.RIGHT;
+		}
+		else if((p_y >= m_y)&&(p_x <= m_x+32)){
+			return dir.UP;
+		}
 	}
 
 	@Override
 	public void colliedAction(Entity p_e) {
 		// TODO Auto-generated method stub
+		if(p_e.typ().equals("Block")){
+			
+		}
 		
+	}
+
+	@Override
+	public String typ() {
+		return "Hero";
 	}
 
 }

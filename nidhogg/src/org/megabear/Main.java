@@ -1,7 +1,7 @@
 package org.megabear;
 
 public class Main {
-	public enum dir{UP,LEFT,DOWN,RIGHT};
+	public enum dir{UP,LEFT,DOWN,RIGHT,NONE};
 	
 	public static final int TICKS_PER_SECOND = 25;
 	public static final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;

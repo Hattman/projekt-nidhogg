@@ -1,11 +1,10 @@
 package org.megabear;
 
-import javax.swing.*;
-
 import org.megabear.Main.dir;
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.util.*;
 
 public class Renderer extends JFrame implements KeyListener{
@@ -20,44 +19,52 @@ public class Renderer extends JFrame implements KeyListener{
 		this.setSize(800,600);
 		this.setVisible(true);
 		this.setResizable(false);
+		this.createBufferStrategy(2);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public void draw(float p_interpolation){
+		BufferStrategy bf = this.getBufferStrategy();
 		//do magic
-		Graphics g = getGraphics();
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 560, 800, 40);
+		Graphics g = null;
+		try {
+			g = bf.getDrawGraphics();
+			g.clearRect(0, 0, 800, 600);
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 560, 800, 40);
 		
-		m_entityVector = m_game.getObjects();
-		for(int i=0; i<m_entityVector.size(); i++){
-			ImageIcon image = new ImageIcon(m_entityVector.get(i).getPath());
-			image.paintIcon(this, g, m_entityVector.get(i).getX(), m_entityVector.get(i).getY());
+			m_entityVector = m_game.getObjects();
+			for(int i=0; i<m_entityVector.size(); i++){
+				ImageIcon image = new ImageIcon(m_entityVector.get(i).getPath());
+				image.paintIcon(this, g, m_entityVector.get(i).getX(), m_entityVector.get(i).getY());
+			}
+		} 
+		finally {
+			g.dispose();
 		}
-		
-		g.clearRect(0, 0, 800, 600);
+		bf.show();
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_UP){
-			m_game.heroMove(dir.UP);
+			m_game.getDirection(dir.UP);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			m_game.heroMove(dir.DOWN);
+			m_game.getDirection(dir.DOWN);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			m_game.heroMove(dir.RIGHT);
+			m_game.getDirection(dir.RIGHT);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			m_game.heroMove(dir.LEFT);
+			m_game.getDirection(dir.LEFT);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		m_game.getDirection(dir.NONE);
 	}
 
 	@Override
