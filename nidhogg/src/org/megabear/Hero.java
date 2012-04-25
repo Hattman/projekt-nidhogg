@@ -6,7 +6,7 @@ public class Hero implements solid{
 	private int m_x;
 	private int m_y;
 	private int m_speed;
-	private String m_path = "P:\\Desktop\\Project_Nidhogg\\Hero.png";
+	private String m_path = "sprite\\Hero.png";
 	
 	public Hero() {
 		m_x = 400;
