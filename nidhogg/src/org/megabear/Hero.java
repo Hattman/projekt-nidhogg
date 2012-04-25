@@ -1,46 +1,75 @@
 package org.megabear;
 
+import java.awt.Rectangle;
+
 import org.megabear.Main.dir;
 
 public class Hero implements solid{
-	private int m_x;
-	private int m_y;
 	private int m_speed;
 	private dir lastDir;
+	private boolean m_goUp;
+	private boolean m_goDown;
+	private boolean m_goLeft;
+	private boolean m_goRight;
 	private String m_path = "sprite\\Hero.png";
+	private Rectangle m_area;
 	
 	public Hero() {
-		m_x = 400;
-		m_y = 400;
 		m_speed = 5;
+		m_goUp = true;
+		m_goDown = true;
+		m_goLeft = true;
+		m_goRight = true;
+		m_area = new Rectangle(400,400,32,32);
 	}
 	
 	@Override
 	public int getX() {
-		return m_x;
+		return (int) m_area.getX();
 	}
 
 	@Override
 	public int getY() {
-		return m_y;
+		return (int) m_area.getY();
 	}
 	
 	@Override
 	public void move(dir p_d) {
 		switch(p_d){
 		case UP:
-			m_y -= m_speed;
+			if(m_goUp){
+				m_area.setLocation(getX(), getY()-m_speed);
+				m_goDown = true;
+				m_goRight = true;
+				m_goLeft = true;
+			}
 			break;
 		case LEFT:
-			m_x -= m_speed;
+			if(m_goLeft){
+				m_area.setLocation(getX()-m_speed, getY());
+				m_goDown = true;
+				m_goRight = true;
+				m_goUp = true;
+			}
 			break;
 		case DOWN:
-			m_y += m_speed;
+			if(m_goDown){
+				m_area.setLocation(getX(), getY()+m_speed);
+				m_goRight = true;
+				m_goUp = true;
+				m_goLeft = true;
+			}
 			break;
 		case RIGHT:
-			m_x += m_speed;
+			if(m_goRight){
+				m_area.setLocation(getX()+m_speed, getY());
+				m_goDown = true;
+				m_goUp = true;
+				m_goLeft = true;
+			}
 			break;
 		}
+		lastDir = p_d;
 		
 	}
 
@@ -50,8 +79,8 @@ public class Hero implements solid{
 	}
 
 	@Override
-	public boolean blockAt(int p_x, int p_y) {
-		if((p_x >= m_x)&&(p_x <= m_x+32)&&(p_y >= m_y)&&(p_y <= m_y+32)){
+	public boolean blockAt(Rectangle p_area) {
+		if(m_area.intersects(p_area)){
 			return true;
 		}
 		else {
@@ -60,19 +89,24 @@ public class Hero implements solid{
 	}
 
 	@Override
-	public void colliedAction(Entity p_e) {
+	public void colliedAction(solid p_s) {
 		// TODO Auto-generated method stub
-		if(p_e.typ().equals("Block")){
+		if(p_s.typ().equals("Block")){
+			m_speed = 2;
 			if(lastDir == dir.UP){
 				move(dir.DOWN);
+				m_goUp = false;
 			}else if(lastDir == dir.DOWN){
 				move(dir.UP);
+				m_goDown = false;
 			}else if(lastDir == dir.RIGHT){
 				move(dir.LEFT);
+				m_goRight = false;
 			}else if(lastDir == dir.LEFT){
 				move(dir.RIGHT);
+				m_goLeft = false;
 			}
-			m_speed = 0;
+			m_speed = 5;
 		}
 		
 	}
@@ -80,6 +114,11 @@ public class Hero implements solid{
 	@Override
 	public String typ() {
 		return "Hero";
+	}
+
+	@Override
+	public Rectangle getArea() {
+		return m_area;
 	}
 
 }

@@ -1,27 +1,26 @@
 package org.megabear;
 
+import java.awt.Rectangle;
+
 import org.megabear.Main.dir;
 
 public class Block implements solid{
-	private int m_x;
-	private int m_y;
-	private dir lastDir;
+	private Rectangle m_area;
 	private String m_path;
 	
 	
 	Block(int p_x, int p_y){
-		m_x = p_x;
-		m_y = p_y;
+		m_area = new Rectangle(p_x,p_y,32,32);
 		m_path = "sprite\\Block.png";
 	}
 	@Override
 	public int getX() {
-		return m_x;
+		return (int) m_area.getX();
 	}
 
 	@Override
 	public int getY() {
-		return m_y;
+		return (int) m_area.getY();
 	}
 
 	@Override
@@ -35,8 +34,8 @@ public class Block implements solid{
 	}
 
 	@Override
-	public boolean blockAt(int p_x, int p_y) {
-		if((p_x >= m_x)&&(p_x <= m_x+32)&&(p_y >= m_y)&&(p_y <= m_y+32)){
+	public boolean blockAt(Rectangle p_area) {
+		if(m_area.intersects(p_area)){
 			return true;
 		}
 		else {
@@ -45,12 +44,16 @@ public class Block implements solid{
 	}
 
 	@Override
-	public void colliedAction(Entity p_e) {
-		//i dont give a shit
+	public void colliedAction(solid p_s) {
+		//???
 	}
 	@Override
 	public String typ() {
 		return "Block";
+	}
+	@Override
+	public Rectangle getArea() {
+		return m_area;
 	}
 
 }

@@ -30,8 +30,6 @@ public class Renderer extends JFrame implements KeyListener{
 		try {
 			g = bf.getDrawGraphics();
 			g.clearRect(0, 0, 800, 600);
-			g.setColor(Color.GREEN);
-			g.fillRect(0, 560, 800, 40);
 		
 			m_entityVector = m_game.getObjects();
 			for(int i=0; i<m_entityVector.size(); i++){

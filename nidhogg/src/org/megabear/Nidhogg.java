@@ -18,6 +18,11 @@ public class Nidhogg {
 		m_solidVector.add(m_theHero);
 		m_entityVector.add(m_theBlock);
 		m_solidVector.add(m_theBlock);
+		for(int i=200; i<600; i+=32){
+			Block aBlock = new Block(i, 550);
+			m_entityVector.add(aBlock);
+			m_solidVector.add(aBlock);
+		}
 	}
 	
 	public void tick(){
@@ -26,7 +31,7 @@ public class Nidhogg {
 		}
 		for(int i=0; i<m_solidVector.size(); i++){
 			for(int j=0; j<m_solidVector.size(); j++){
-				boolean stuff = m_solidVector.get(i).blockAt(m_solidVector.get(j).getX(), m_solidVector.get(j).getY());
+				boolean stuff = m_solidVector.get(i).blockAt(m_solidVector.get(j).getArea());
 				if(stuff){
 					m_solidVector.get(i).colliedAction(m_solidVector.get(j));
 				}
