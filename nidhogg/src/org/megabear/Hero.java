@@ -6,6 +6,7 @@ public class Hero implements solid{
 	private int m_x;
 	private int m_y;
 	private int m_speed;
+	private dir lastDir;
 	private String m_path = "sprite\\Hero.png";
 	
 	public Hero() {
@@ -39,8 +40,6 @@ public class Hero implements solid{
 		case RIGHT:
 			m_x += m_speed;
 			break;
-		default:
-			break;
 		}
 		
 	}
@@ -51,12 +50,12 @@ public class Hero implements solid{
 	}
 
 	@Override
-	public dir blockAt(int p_x, int p_y) {
-		if((p_x >= m_x)&&(p_x <= m_x+32)&&(p_y  m_y)){
-			return dir.RIGHT;
+	public boolean blockAt(int p_x, int p_y) {
+		if((p_x >= m_x)&&(p_x <= m_x+32)&&(p_y >= m_y)&&(p_y <= m_y+32)){
+			return true;
 		}
-		else if((p_y >= m_y)&&(p_x <= m_x+32)){
-			return dir.UP;
+		else {
+			return false;
 		}
 	}
 
@@ -64,7 +63,16 @@ public class Hero implements solid{
 	public void colliedAction(Entity p_e) {
 		// TODO Auto-generated method stub
 		if(p_e.typ().equals("Block")){
-			
+			if(lastDir == dir.UP){
+				move(dir.DOWN);
+			}else if(lastDir == dir.DOWN){
+				move(dir.UP);
+			}else if(lastDir == dir.RIGHT){
+				move(dir.LEFT);
+			}else if(lastDir == dir.LEFT){
+				move(dir.RIGHT);
+			}
+			m_speed = 0;
 		}
 		
 	}

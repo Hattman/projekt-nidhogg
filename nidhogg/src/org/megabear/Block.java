@@ -5,6 +5,7 @@ import org.megabear.Main.dir;
 public class Block implements solid{
 	private int m_x;
 	private int m_y;
+	private dir lastDir;
 	private String m_path;
 	
 	

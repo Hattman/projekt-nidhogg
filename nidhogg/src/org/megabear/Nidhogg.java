@@ -8,12 +8,16 @@ public class Nidhogg {
 	private Vector<Entity> m_entityVector = new Vector<Entity>();
 	private Vector<solid> m_solidVector = new Vector<solid>();
 	private Hero m_theHero;
-	private dir m_direction;
+	private Block m_theBlock;
+	private dir m_direction = dir.NONE;
 	
 	public Nidhogg(){
 		m_theHero = new Hero();
+		m_theBlock = new Block(400, 300);
 		m_entityVector.add(m_theHero);
 		m_solidVector.add(m_theHero);
+		m_entityVector.add(m_theBlock);
+		m_solidVector.add(m_theBlock);
 	}
 	
 	public void tick(){
